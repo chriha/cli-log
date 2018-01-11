@@ -33,6 +33,7 @@ class TailCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return void
+     * @throws \Exception
      */
     public function execute( InputInterface $input, OutputInterface $output ) : void
     {
@@ -79,6 +80,15 @@ class TailCommand extends Command
                 $text = "<default>{$parts[1]}</default> {$parts[2]} {$parts[3]} {$parts[4]}";
 
                 $output->writeln( $text );
+
+                $system = trim( shell_exec( "uname" ) );
+                $string = str_replace( '\'', '', explode( ' {', $parts[4] )[0] );
+                // $string = explode( ' {', $parts[4] )[0];
+
+                if ( $system === "Darwin" )
+                {
+                    shell_exec( `osascript -e 'display notification "{$string}" with title "{$parts[3]}"'` );
+                }
             }
         } );
     }
