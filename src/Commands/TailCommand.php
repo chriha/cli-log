@@ -61,7 +61,7 @@ class TailCommand extends Command
 
                 if ( empty( $line ) ) continue;
 
-                preg_match( "/^(\[[0-9-\s:]+\]) ([a-z]+)[\s\.]?([a-zA-Z]+): (.+)/", $line, $parts );
+                preg_match( "/^(\[[0-9-\s:]+\])[?[0-9]*]? ([a-z]*)[\s\.]?([a-zA-Z]+): (.+)/", $line, $parts );
 
                 if ( empty( $parts ) || count( $parts ) < 5 ) continue;
 
@@ -85,7 +85,7 @@ class TailCommand extends Command
                 $output->writeln( $text );
 
                 $system = trim( shell_exec( "uname" ) );
-                $string = str_replace( '\'', '', explode( ' {', $parts[4] )[0] );
+                $string = addslashes( trim( str_replace( '\'', '', explode( ' {', $parts[4] )[0] ) ) );
                 // $string = explode( ' {', $parts[4] )[0];
 
                 if ( $system === "Darwin" )
