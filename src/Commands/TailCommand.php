@@ -87,7 +87,8 @@ class TailCommand extends Command
 
                 if ( $system === "Darwin" )
                 {
-                    shell_exec( `osascript -e 'display notification "{$string}" with title "{$parts[3]}"'` );
+                    $message = strip_tags( $parts[3] );
+                    shell_exec( `osascript -e 'display notification "{$string}" with title "{$message}"'` );
                 }
             }
         } );
