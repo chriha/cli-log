@@ -26,7 +26,7 @@ class TailCommand extends Command
     {
         $this->setName( 'tail' )
             ->setDescription( 'Tail a file.' )
-            ->addArgument( 'file', InputArgument::REQUIRED, 'The file you want to tail.' );
+            ->addArgument( 'file', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'The file you want to tail.' );
     }
 
     /**
@@ -44,9 +44,12 @@ class TailCommand extends Command
         $output->getFormatter()->setStyle( 'default', $styleBlue );
 
         $tail = new Tail( __DIR__ . '/../../save.json' );
-        $tail->addFile( $input->getArgument( 'file' ) );
 
-        $output->writeln( "Listening to <comment>" . $input->getArgument( 'file' ) . "</comment> ..." );
+        foreach ( $input->getArgument( 'file' ) as $file )
+        {
+            $tail->addFile( $file );
+            $output->writeln( "Listening to <comment>{$file}</comment> ..." );
+        }
 
         $tail->listen( function( $file, $chunk ) use ( $output )
         {
