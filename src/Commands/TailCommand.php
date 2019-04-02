@@ -13,13 +13,13 @@ class TailCommand extends Command
 {
 
     /** @var array */
-    protected $reds = [ 'alert', 'emergency', 'error', 'fatal', 'critical' ];
+    protected $reds = [ 'alert', 'emergency', 'error', 'fatal', 'critical', 'failed' ];
 
     /** @var array */
-    protected $yellows = [ 'warning' ];
+    protected $yellows = [ 'warning', 'debug' ];
 
     /** @var array */
-    protected $greens = [ 'info' ];
+    protected $greens = [ 'info', 'processed' ];
 
 
     public function configure()
